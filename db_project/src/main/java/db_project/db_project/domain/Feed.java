@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -41,7 +44,7 @@ public class Feed {
     private String originNm;
     private String inslbltyEdblfibrQy;
 
-    @OneToOne(mappedBy = "choosedFeed", fetch = LAZY)
-    private ChoosedFeed choosedFeed;
+    @OneToMany(mappedBy = "boardFeed")
+    private List<BoardFeed> boardFeeds = new ArrayList<>();
 
 }

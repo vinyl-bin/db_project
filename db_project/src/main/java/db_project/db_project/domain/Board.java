@@ -27,5 +27,5 @@ public class Board {
     private User user;
 
     @OneToMany(mappedBy = "board")
-    private List<ChoosedFeed> choosedFeeds = new ArrayList<>();
+    private List<BoardFeed> boardFeeds = new ArrayList<>();
 }
