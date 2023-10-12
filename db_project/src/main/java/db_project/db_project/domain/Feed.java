@@ -44,7 +44,7 @@ public class Feed {
     private String originNm;
     private String inslbltyEdblfibrQy;
 
-    @OneToMany(mappedBy = "boardFeed")
+    @OneToMany(mappedBy = "feed")
     private List<BoardFeed> boardFeeds = new ArrayList<>();
 
 }
