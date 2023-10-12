@@ -51,7 +51,6 @@ public class UserService {
 
         boolean isEqual = Objects.equals(findNameUsers, findPasswordUsers);
         if (!isEqual) {
-            System.out.println("정보 다름");
             throw new IllegalStateException("user와 password의 정보가 다릅니다.");
         }
 
