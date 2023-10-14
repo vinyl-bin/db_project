@@ -1,6 +1,8 @@
 package db_project.db_project.domain;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,14 +14,16 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor   //기본 생성자를 생성해준다. 이 경우 초기값 세팅이 필요한 final 변수가 있을 경우 컴파일 에러가 발생함으로 주의한다. @NoArgsConstructor(force=true) 를 사용하면 null, 0 등 기본 값으로 초기화 된다.
 public class Board {
 
     @Id @GeneratedValue
     @Column(name = "board_id")
     private Long board_id;
 
-    private String title;
+    public String title;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String text;
 
     @ManyToOne(fetch = LAZY)
@@ -28,4 +32,13 @@ public class Board {
 
     @OneToMany(mappedBy = "board")
     private List<BoardFeed> boardFeeds = new ArrayList<>();
+
+    @Builder
+    public Board(Long board_id, String title, String text, User user, List<BoardFeed> boardFeeds) {
+        this.board_id = board_id;
+        this.title = title;
+        this.text = text;
+        this.user = user;
+        this.boardFeeds = boardFeeds;
+    }
 }
