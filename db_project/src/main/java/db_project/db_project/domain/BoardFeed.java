@@ -22,4 +22,12 @@ public class BoardFeed {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "feed_id")
     private Feed feed;
+
+    //==생성 메서드==//
+    public static BoardFeed createBoardFeed(Feed feed) {
+        BoardFeed boardFeed = new BoardFeed();
+        boardFeed.setFeed(feed);
+        return boardFeed;
+    }
+
 }

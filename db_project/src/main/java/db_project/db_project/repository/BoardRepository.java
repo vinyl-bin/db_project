@@ -17,13 +17,20 @@ public class BoardRepository {
     private final EntityManager em;
 
     public void save(Board board) {
-        em.persist(board);
+        if (board.getBoard_id() == null) {
+            em.persist(board);
+        }
+        else {
+            em.merge(board);
+        };
     }
 
     public Board findOne(Long board_id) {
         return em.find(Board.class, board_id);
     }
 
+
+    // Board 목록 보여주는 기는은 BoardFeedRepositoryImpl에 있음(검색기능도 추가함)
 
 }
 
