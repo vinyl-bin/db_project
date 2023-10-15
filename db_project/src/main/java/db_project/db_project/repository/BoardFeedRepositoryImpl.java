@@ -5,12 +5,16 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import db_project.db_project.domain.*;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.swing.text.html.parser.Entity;
 
 import java.util.*;
@@ -19,13 +23,12 @@ import java.util.function.Supplier;
 import static db_project.db_project.domain.QBoardFeed.boardFeed;
 
 @Repository
+@RequiredArgsConstructor
 public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
 
-    public final JPAQueryFactory queryFactory;  // JPAQueryFactory 빈 주입
+    private final EntityManager em;
+    private final JPAQueryFactory queryFactory;
 
-    public BoardFeedRepositoryImpl(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
-    }
 
     public List<BoardFeed> findBySearchOption(SearchCondition condition) {
         return queryFactory
@@ -57,5 +60,18 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
 
     BooleanBuilder feedCt(String content) {
         return nullSafeBuilder(() -> boardFeed.feed.feedClCode.contains(content));
+    }
+
+    public void save(BoardFeed boardFeed) {
+        if (boardFeed.getBoardFeed_id() == null) {
+            em.persist(boardFeed);
+        }
+        else {
+            em.merge(boardFeed);
+        };
+    }
+
+    public BoardFeed findOne(Long boardFeed_id) {
+        return em.find(BoardFeed.class, boardFeed_id);
     }
 }

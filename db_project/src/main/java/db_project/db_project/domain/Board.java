@@ -30,18 +30,15 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board")
-    @JoinColumn(name = "feed_id")
-    private List<BoardFeed> boardFeeds = new ArrayList<>();
-
-//    @Builder
-//    public Board(Long board_id, String title, String text, User user, List<BoardFeed> boardFeeds) {
-//        this.board_id = board_id;
-//        this.title = title;
-//        this.text = text;
+//    public void belongTo(User user) {
 //        this.user = user;
-//        this.boardFeeds = boardFeeds;
 //    }
+
+
+    @OneToOne(mappedBy = "board", fetch = LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "feed_id")
+    private BoardFeed boardFeed = new BoardFeed();
+
 
     //==연관관계 메서드==//
     public void setUser(User user) {
@@ -49,22 +46,14 @@ public class Board {
         user.getBoards().add(this);
     }
 
-    public void addBoardFeed(BoardFeed boardFeed) {
-        boardFeeds.add(boardFeed);
-        boardFeed.setBoard(this);
-    }
-
     //==생성 메서드==//
-    public static Board createBoard(String title, String text, User user, BoardFeed... boardFeeds) {
+    public static Board createBoard(String title, String text, User user) {
         Board board = new Board();
 
         board.setTitle(title);
         board.setText(text);
 
         board.setUser(user);
-        for (BoardFeed boardFeed : boardFeeds) {
-            board.addBoardFeed(boardFeed);
-        }
         return board;
     }
 }

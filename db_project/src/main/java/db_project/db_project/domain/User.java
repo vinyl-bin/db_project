@@ -19,6 +19,12 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Board> boards = new ArrayList<>();
+
+    //연관관계 주인인 board 객체에 board값 넣어주기 위해 연관관계 메소드 작성
+//    public void addBoards(Board boards) {
+//        this.boards.add(boards);
+//        boards.belongTo(this);
+//    }
 }

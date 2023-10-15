@@ -11,11 +11,14 @@ import static javax.persistence.FetchType.LAZY;
 @Getter @Setter
 public class BoardFeed {
 
+//    private final EntityManager em;
+
+
     @Id @GeneratedValue
     @Column(name = "boardFeed_id")
     private Long boardFeed_id;
 
-    @ManyToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
@@ -24,9 +27,11 @@ public class BoardFeed {
     private Feed feed;
 
     //==생성 메서드==//
-    public static BoardFeed createBoardFeed(Feed feed) {
+    public static BoardFeed createBoardFeed(Board board, Feed feed) {
         BoardFeed boardFeed = new BoardFeed();
+        boardFeed.setBoard(board);
         boardFeed.setFeed(feed);
+//        em.persist(boardFeed);
         return boardFeed;
     }
 

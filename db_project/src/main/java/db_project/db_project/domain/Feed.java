@@ -44,7 +44,7 @@ public class Feed {
     private String originNm;
     private String inslbltyEdblfibrQy;
 
-    @OneToMany(mappedBy = "feed")
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     private List<BoardFeed> boardFeeds = new ArrayList<>();
 
 }
