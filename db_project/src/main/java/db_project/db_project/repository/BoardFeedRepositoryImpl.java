@@ -31,6 +31,11 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
 
 
     public List<BoardFeed> findBySearchOption(SearchCondition condition) {
+
+        if (condition.getType() == null) {
+            return findAll();
+        }
+
         return queryFactory
                 .selectFrom(boardFeed)
                 .where(isSearchable(condition.getType(), condition.getContent()))
@@ -45,8 +50,21 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
         }
     }
 
+    BooleanBuilder nullOkBuilder(Supplier<BooleanExpression> f) {
+        try {
+            return new BooleanBuilder(f.get());
+        } catch (Exception e) {
+            return new BooleanBuilder(f.get());
+        }
+    }
+
     BooleanBuilder isSearchable(SearchType searchType, String content) {
-        if (searchType == searchType.TIT) {
+        if (searchType == null) {
+            return null;
+
+
+        }
+        else if (searchType == searchType.TIT) {
             return titleCt(content);
         }
         else {
@@ -73,5 +91,10 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
 
     public BoardFeed findOne(Long boardFeed_id) {
         return em.find(BoardFeed.class, boardFeed_id);
+    }
+
+    public List<BoardFeed> findAll() {
+        return em.createQuery("select bf from BoardFeed bf", BoardFeed.class)
+                .getResultList();
     }
 }

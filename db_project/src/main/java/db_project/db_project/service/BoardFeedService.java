@@ -23,4 +23,6 @@ public class BoardFeedService {
         return boardFeedRepository.findBySearchOption(searchCondition);
     }
 
+
+
 }

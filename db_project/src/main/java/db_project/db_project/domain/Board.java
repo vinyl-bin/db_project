@@ -30,10 +30,6 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    public void belongTo(User user) {
-//        this.user = user;
-//    }
-
 
     @OneToOne(mappedBy = "board", fetch = LAZY, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "feed_id")
@@ -44,6 +40,15 @@ public class Board {
     public void setUser(User user) {
         this.user = user;
         user.getBoards().add(this);
+    }
+
+    public void belongTo(User user) {
+        this.user = user;
+    }
+
+    public void addBoardFeed(BoardFeed boardFeed) {
+        this.boardFeed = boardFeed;
+        boardFeed.belongTo(this);
     }
 
     //==생성 메서드==//

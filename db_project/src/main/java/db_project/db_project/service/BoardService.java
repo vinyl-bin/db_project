@@ -9,6 +9,7 @@ import db_project.db_project.repository.BoardRepository;
 import db_project.db_project.repository.FeedRepository;
 import db_project.db_project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class BoardService {
 
+    @Autowired
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
     private final FeedRepository feedRepository;
@@ -38,9 +40,12 @@ public class BoardService {
         BoardFeed boardFeed1 = BoardFeed.createBoardFeed(board, feed1);
         boardFeedRepository.save(boardFeed1);
 
-
         return boardFeed1.getBoardFeed_id();
 
 
+    }
+
+    public Board findOne(Long boardId) {
+        return boardRepository.findOne(boardId);
     }
 }

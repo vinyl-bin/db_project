@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-//@Rollback(value = false)
+@Rollback(value = false)
 public class BoardServiceTest {
 
     @Autowired EntityManager em;

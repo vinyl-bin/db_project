@@ -20,6 +20,10 @@ public class FeedService {
         feedRepository.save(feed);
     }
 
+    public Feed findOne(Long feedId) {
+        return feedRepository.findOne(feedId);
+    }
+
     public List<Feed> findFeeds() {
         return feedRepository.findAll();
     }
