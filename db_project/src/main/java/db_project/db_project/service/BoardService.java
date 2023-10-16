@@ -1,9 +1,6 @@
 package db_project.db_project.service;
 
-import db_project.db_project.domain.Board;
-import db_project.db_project.domain.BoardFeed;
-import db_project.db_project.domain.Feed;
-import db_project.db_project.domain.User;
+import db_project.db_project.domain.*;
 import db_project.db_project.repository.BoardFeedRepositoryImpl;
 import db_project.db_project.repository.BoardRepository;
 import db_project.db_project.repository.FeedRepository;
@@ -13,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -48,6 +47,13 @@ public class BoardService {
         boardFeedRepository.save(boardFeed);
 
         return board;
+    }
+
+    /**
+     * 검색
+     */
+    public List<BoardFeed> findBoards(SearchCondition searchCondition) {
+        return boardFeedRepository.findBySearchOption(searchCondition);
     }
 
     public Board findOne(Long boardId) {

@@ -34,9 +34,9 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
 
     public List<BoardFeed> findBySearchOption(SearchCondition condition) {
 
-        if (condition.getType() == null) {
-            return findAll();
-        }
+//        if (condition.getType() == null) {
+//            return findAll();
+//        }
 
         return queryFactory
                 .selectFrom(boardFeed)
@@ -49,14 +49,6 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
             return new BooleanBuilder(f.get());
         } catch (Exception e) {
             return new BooleanBuilder();
-        }
-    }
-
-    BooleanBuilder nullOkBuilder(Supplier<BooleanExpression> f) {
-        try {
-            return new BooleanBuilder(f.get());
-        } catch (Exception e) {
-            return new BooleanBuilder(f.get());
         }
     }
 

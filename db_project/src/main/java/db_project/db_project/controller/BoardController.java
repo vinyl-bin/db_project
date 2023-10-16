@@ -74,51 +74,13 @@ public class BoardController {
         return "redirect:/";
     }
 
-//    @GetMapping("/board/list")
-//    public String boardList(@ModelAttribute ("searchCondition") SearchCondition searchCondition , Model model) {
-//        List<BoardFeed> boardFeeds = boardFeedService.findBoardFeedContent(searchCondition);
-//        model.addAttribute("boardFeeds", boardFeeds);
-//
-//        return "board/boardSearchList";
-//    }
-//
-//    @GetMapping("/board/list")
-//    public String boardList(@ModelAttribute ("searchCondition") SearchCondition searchCondition , Model model) {
-//        List<BoardFeed> boardFeeds = boardFeedService.findBoardFeedContent(searchCondition);
-//        List<BoardFeed> boardFeeds1 = new ArrayList<>();
-//        for (int i = 0; i < boardFeeds.size(); i++) {
-//            BoardFeed boardFeed = boardFeeds.get(i);
-//            Long board_id = boardFeed.getBoard().getBoard_id();
-//            Long feed_id = boardFeed.getFeed().getFeed_id();
-//
-//
-//            //test
-//            Long user_id = 7L;
-//            User user = userRepository.findOne(user_id);
-//
-//
-//            Board board = boardRepository.findOne(5L);
-//            Feed feed = feedService.findOne(feed_id);
-//
-//            BoardFeed boardFeed1 = BoardFeed.createBoardFeed(board, feed);
-//            boardFeeds1.add(boardFeed1);
-//        }
-//
-//        model.addAttribute("boardFeeds", boardFeeds1);
-//
-//        return "board/boardSearchList";
-//    }
-
-
-
     @GetMapping("/board/list")
     public String boardList(@ModelAttribute ("searchCondition") SearchCondition searchCondition , Model model) {
-//        List<BoardFeed> boardFeeds = boardFeedService.findBoardFeedContent(searchCondition);
-        Board board = boardService.writeBoard("writeboard title!!!", "writeboard text!!!!", 1L, 2L);
-        System.out.println("테스트");
-
-        model.addAttribute("board", board);
+        List<BoardFeed> boardFeeds = boardService.findBoards(searchCondition);
+        model.addAttribute("boardFeeds", boardFeeds);
 
         return "board/boardSearchList";
     }
+
+
 }

@@ -19,10 +19,6 @@ public class BoardFeedService {
 
     private final BoardFeedRepositoryImpl boardFeedRepository;
 
-    public List<BoardFeed> findBoardFeedContent(SearchCondition searchCondition) {
-        return boardFeedRepository.findBySearchOption(searchCondition);
-    }
-
     @Transactional
     public void save(BoardFeed boardFeed) {
         boardFeedRepository.save(boardFeed);
