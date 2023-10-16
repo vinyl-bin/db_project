@@ -14,7 +14,6 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor   //기본 생성자를 생성해준다. 이 경우 초기값 세팅이 필요한 final 변수가 있을 경우 컴파일 에러가 발생함으로 주의한다. @NoArgsConstructor(force=true) 를 사용하면 null, 0 등 기본 값으로 초기화 된다.
 public class Board {
 
     @Id @GeneratedValue
@@ -26,14 +25,20 @@ public class Board {
     @Column(columnDefinition = "LONGTEXT")
     private String text;
 
+
+    /**
+     * @JoinColumn은 연관관계주인인 엔티티가 다른 엔티티의 외래키를 가져올때 사용한다.
+     */
+
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    @OneToOne(mappedBy = "board", fetch = LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "feed_id")
+    @OneToOne(mappedBy = "board", fetch = LAZY)
     private BoardFeed boardFeed = new BoardFeed();
+
+
 
 
     //==연관관계 메서드==//
@@ -42,23 +47,26 @@ public class Board {
         user.getBoards().add(this);
     }
 
-    public void belongTo(User user) {
-        this.user = user;
-    }
-
     public void addBoardFeed(BoardFeed boardFeed) {
         this.boardFeed = boardFeed;
-        boardFeed.belongTo(this);
+        boardFeed.setBoard(this);
     }
+
 
     //==생성 메서드==//
-    public static Board createBoard(String title, String text, User user) {
+    public static Board createBoard(User user, BoardFeed boardFeed, String title, String text) {
         Board board = new Board();
-
+        board.setUser(user);
+        board.addBoardFeed(boardFeed);
         board.setTitle(title);
         board.setText(text);
-
-        board.setUser(user);
         return board;
     }
+
+    //==비즈니스 로직==//
+//    public void cancel() {
+//        boardFeed.cancel();
+//    }
+
+
 }

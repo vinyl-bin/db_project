@@ -19,30 +19,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class BoardService {
 
-    @Autowired
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
     private final FeedRepository feedRepository;
     private final BoardFeedRepositoryImpl boardFeedRepository;
+    private final BoardFeedService boardFeedService;
+
+
+    /**
+     * 게시판 작성
+     */
 
     @Transactional
-    public Long writeBoard(String title, String text, Long user_id, Long feed_id1) {
+    public Board writeBoard(String title, String text, Long user_id, Long feed_id) {
 
+        //엔티티 조회
+        User user = userRepository.findOne(user_id);
+        Feed feed = feedRepository.findOne(feed_id);
 
-        User user = userRepository.findOne(user_id);   //user를 board에 추가해서 board 만듦, board와 feed를 boardfeed에 넣어줌
-//        userRepository.save(user);
-        Board board = Board.createBoard(title, text, user);
-//        boardRepository.save(board);
+        //boardfeed 생성
+        BoardFeed boardFeed = BoardFeed.createBoardFeed(feed);
 
-        Feed feed1 = feedRepository.findOne(feed_id1);
-//        feedRepository.save(feed1);
+        //board 생성
+        Board board = Board.createBoard(user, boardFeed, title, text);
 
-        BoardFeed boardFeed1 = BoardFeed.createBoardFeed(board, feed1);
-        boardFeedRepository.save(boardFeed1);
+        //board 저장
+        boardRepository.save(board);
+        boardFeedRepository.save(boardFeed);
 
-        return boardFeed1.getBoardFeed_id();
-
-
+        return board;
     }
 
     public Board findOne(Long boardId) {

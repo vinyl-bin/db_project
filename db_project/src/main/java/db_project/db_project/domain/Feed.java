@@ -44,14 +44,14 @@ public class Feed {
     private String originNm;
     private String inslbltyEdblfibrQy;
 
-    @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "feed")
     private List<BoardFeed> boardFeeds = new ArrayList<>();
 
 
     //==연관관계 메서드==//
-    public void addBoardFeeds(BoardFeed boardFeeds) {
-        this.boardFeeds.add(boardFeeds);
-        boardFeeds.belongToFeed(this);
-    }
+//    public void addBoardFeeds(BoardFeed boardFeeds) {
+//        this.boardFeeds.add(boardFeeds);
+//        boardFeeds.belongToFeed(this);
+//    }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,6 +25,7 @@ import static db_project.db_project.domain.QBoardFeed.boardFeed;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
 
     private final EntityManager em;
@@ -87,6 +89,7 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
         else {
             em.merge(boardFeed);
         };
+        em.persist(boardFeed);
     }
 
     public BoardFeed findOne(Long boardFeed_id) {

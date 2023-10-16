@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardRepository {
 
-    @PersistenceContext
+//    @PersistenceContext
     private final EntityManager em;
 
     public void save(Board board) {

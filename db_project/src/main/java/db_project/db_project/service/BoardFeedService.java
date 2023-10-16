@@ -23,6 +23,10 @@ public class BoardFeedService {
         return boardFeedRepository.findBySearchOption(searchCondition);
     }
 
+    @Transactional
+    public void save(BoardFeed boardFeed) {
+        boardFeedRepository.save(boardFeed);
+    }
 
 
 }
