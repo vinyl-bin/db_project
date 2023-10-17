@@ -1,5 +1,6 @@
 package db_project.db_project.service;
 
+import db_project.db_project.controller.BoardController;
 import db_project.db_project.domain.*;
 import db_project.db_project.repository.BoardFeedRepositoryImpl;
 import db_project.db_project.repository.BoardRepository;
@@ -39,12 +40,42 @@ public class BoardService {
         //boardfeed 생성
         BoardFeed boardFeed = BoardFeed.createBoardFeed(feed);
 
+
         //board 생성
         Board board = Board.createBoard(user, boardFeed, title, text);
 
         //board 저장
-        boardRepository.save(board);
         boardFeedRepository.save(boardFeed);
+        boardRepository.save(board);
+
+        return board;
+    }
+
+    /**
+     *  게시판 수정 후 재작성
+     */
+
+    @Transactional
+    public Board updateWriteBoard(String title, String text, Long user_id, Long feed_id, Long board_id, Long boardFeed_id) {
+
+        //엔티티 조회
+        User user = userRepository.findOne(user_id);
+        Feed feed = feedRepository.findOne(feed_id);
+
+        //boardfeed 생성
+        BoardFeed boardFeed = BoardFeed.createBoardFeed(feed);
+        boardFeed.setBoardFeed_id(boardFeed_id);
+
+
+        //board 생성
+        Board board = Board.createBoard(user, boardFeed, title, text);
+        board.setBoard_id(board_id);
+
+        //board 저장
+        boardFeedRepository.save(boardFeed);
+
+        board.setBoardFeed(boardFeed);
+        boardRepository.save(board);
 
         return board;
     }

@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -46,14 +43,11 @@ public class BoardController {
     @Autowired
     UserRepository userRepository;
 
-    private final EntityManager em;
-
-
     @GetMapping("/board/write")
     public String createForm(Model model) {
         List<Feed> feeds = feedService.findFeeds();
 
-        model.addAttribute("from", new BoardForm());
+        model.addAttribute("form", new BoardForm());
         model.addAttribute("feeds", feeds);
 
         return "board/boardForm";
@@ -80,6 +74,62 @@ public class BoardController {
         model.addAttribute("boardFeeds", boardFeeds);
 
         return "board/boardSearchList";
+    }
+
+    @GetMapping("/board/{boardId}/edit")
+    public String updateBoardForm(@PathVariable("boardId") Long boardId, Model model) {
+
+        //board 정보 불러오기
+        Board board = boardService.findOne(boardId);
+
+        BoardForm boardForm = new BoardForm();
+        boardForm.setTitle(board.getTitle());
+        boardForm.setUserName(board.getUser().getName());
+        boardForm.setPassword(board.getUser().getPassword());
+        boardForm.setText(board.getText());
+
+        //feedId 찾기
+        Long feed_id = board.getBoardFeed().getFeed().getFeed_id();
+
+        //feed 정보 불러오기
+        Feed originFeed = feedService.findOne(feed_id);
+
+        //feeds 카테고리 위해서 리스트로 불러오기
+        List<Feed> feeds = feedService.findFeeds();
+
+        model.addAttribute("boardForm", boardForm);
+        model.addAttribute("originFeed", originFeed);
+        model.addAttribute("feeds", feeds);
+        return "board/updateBoardForm";
+    }
+
+    @PostMapping("board/{boardId}/edit")
+    public String updateItem(@PathVariable String boardId,
+                             @ModelAttribute("boardForm") BoardForm boardForm,
+                             @RequestParam("feeds") Long feed_id) {
+
+        //user_id 구하기
+        Long boardIdL = Long.parseLong(boardId);
+        Board gboard = boardService.findOne(boardIdL);
+        Long guser_id = gboard.getUser().getUser_id();
+
+
+        //boardFeed_id 구하기
+        Long boardFeed_id = gboard.getBoardFeed().getBoardFeed_id();
+
+
+
+        User user = new User();
+        user.setUser_id(guser_id);
+        user.setName(boardForm.getUserName());
+        user.setPassword(boardForm.getPassword());
+
+        userService.createUser(user);
+
+
+        boardService.updateWriteBoard(boardForm.getTitle(), boardForm.getText(), user.getUser_id(), feed_id, boardIdL, boardFeed_id);
+
+        return "redirect:/board/list";
     }
 
 

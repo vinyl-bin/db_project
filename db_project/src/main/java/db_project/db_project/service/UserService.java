@@ -28,6 +28,11 @@ public class UserService {
         return user.getUser_id();
     }
 
+    @Transactional
+    public void createUser(User user) {
+        userRepository.save(user);
+    }
+
     private void validateDuplicateUser(User user) {
         List<User> findUsers = userRepository.findByName(user.getName());
         if (!findUsers.isEmpty()) {
@@ -63,6 +68,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
+    /**
+     * user 이름으로 조회
+     */
+    public List<User> findByName(String name) {
+        return userRepository.findByName(name);
+    }
 
 
 }

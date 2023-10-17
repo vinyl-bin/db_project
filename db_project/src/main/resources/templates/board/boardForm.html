@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <form role="form" action="/board/write" th:object="${from}" method="post">
+    <form role="form" action="/board/write" th:object="${form}" method="post">
 
         <label for="title">제목</label>
         <input type="text" th:field="*{title}" class="form-control" id="title"
@@ -29,7 +29,7 @@
 
         <label for="text">내용</label>
         <textarea th:field="*{text}" class="form-control" id="text"
-                  placeholder="내용" style="height: 200px"></textarea>
+                  placeholder="내용" style="height: 500px"></textarea>
 
 
 

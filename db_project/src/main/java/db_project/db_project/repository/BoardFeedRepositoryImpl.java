@@ -80,8 +80,7 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
         }
         else {
             em.merge(boardFeed);
-        };
-        em.persist(boardFeed);
+        }
     }
 
     public BoardFeed findOne(Long boardFeed_id) {

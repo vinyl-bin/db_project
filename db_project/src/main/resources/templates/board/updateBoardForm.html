@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form th:object="${boardForm}" method="post">
+        <!-- id -->
+        <div class="form-group">
+            <label th:for="title">제목</label>
+            <input type="text" th:field="*{title}" class="form-control" id="title"
+                   placeholder="제목을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="userName">작성자</label>
+            <input type="text" th:field="*{userName}" class="form-control"
+                   placeholder="작성자 이름" />
+        </div>
+        <div class="form-group">
+            <label th:for="password">비밀번호</label>
+            <input type="text" th:field="*{password}" class="form-control" id="password"
+                   placeholder="비밀번호">
+        </div>
+
+        <div class="form-group">
+
+            <label for="feeds">카테고리</label>
+            <select name="feeds" id="feeds" class="form-control">
+                <option text="카테고리">카테고리 선택</option>
+                <option th:each="feed : ${feeds}"
+                        th:value="${feed.feed_id}"
+                        th:text="${feed.feedClCodeNm}" />
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label th:for="text">내용</label>
+            <textarea th:field="*{text}" class="form-control" id="text"
+                      placeholder="내용" style="height: 500px"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

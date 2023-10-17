@@ -24,7 +24,7 @@ public class BoardRepository {
         }
         else {
             em.merge(board);
-        };
+        }
     }
 
     public Board findOne(Long board_id) {
