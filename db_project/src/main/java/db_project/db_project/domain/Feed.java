@@ -20,58 +20,57 @@ public class Feed {
     @Column(name = "feed_id")
     private long feed_id;
 
-//    @Id
-    @Column(name = "feedSeqNo")
-    private int feedSeqNo;
 
+    @Column(name = "feedSeqNo")
+    private Integer feedSeqNo;
     @Column(nullable = true, name = "mtralPc")
-    private int mtralPc;
+    private Integer mtralPc;
     @Column(nullable = true, name = "clciQy")
-    private double clciQy;
+    private Double clciQy;
     @Column(nullable = true, name = "naQy")
-    private double naQy;
+    private Double naQy;
     @Column(nullable = true, name = "dryMatter")
-    private double dryMatter;
+    private Double dryMatter;
     @Column(nullable = true, name = "ashsQy")
-    private double ashsQy;
+    private Double ashsQy;
     @Column(nullable = true, name = "crfbQy")
-    private double crfbQy;
+    private Double crfbQy;
     @Column(nullable = true, name = "totEdblfibrQy")
-    private double totEdblfibrQy;
+    private Double totEdblfibrQy;
     @Column(nullable = true, name = "feedClCode")
-    private int feedClCode;
+    private Integer feedClCode;
     @Column(nullable = true, name = "ptssQy")
-    private double ptssQy;
+    private Double ptssQy;
     @Column(nullable = true, name = "mitrQy")
-    private double mitrQy;
+    private Double mitrQy;
     @Column(nullable = true, name = "slwtEdblfibrQy")
-    private double slwtEdblfibrQy;
+    private Double slwtEdblfibrQy;
     @Column(nullable = true, name = "liacQy")
-    private double liacQy;
+    private Double liacQy;
     @Column(nullable = true, name = "upperFeedClCode")
-    private int upperFeedClCode;
+    private Integer upperFeedClCode;
     @Column(nullable = true, name = "fatQy")
-    private double fatQy;
+    private Double fatQy;
     @Column(nullable = true, name = "lnacQy")
-    private double lnacQy;
+    private Double lnacQy;
     @Column(nullable = true, name = "vtmaQy")
-    private double vtmaQy;
+    private Double vtmaQy;
     @Column(nullable = true, name = "trypQy")
-    private double trypQy;
+    private Double trypQy;
     @Column(nullable = false, name = "feedNm")
     private String feedNm;
     @Column(nullable = true, name = "crbQy")
-    private double crbQy;
+    private Double crbQy;
     @Column(nullable = false, name = "feedClCodeNm")
     private String feedClCodeNm;
     @Column(nullable = true, name = "phphQy")
-    private double phphQy;
+    private Double phphQy;
     @Column(nullable = true, name = "protQy")
-    private double protQy;
+    private Double protQy;
     @Column(nullable = true, name = "originNm")
     private String originNm;
     @Column(nullable = true, name = "inslbltyEdblfibrQy")
-    private double inslbltyEdblfibrQy;
+    private Double inslbltyEdblfibrQy;
 
     @OneToMany(mappedBy = "feed")
     private List<BoardFeed> boardFeeds = new ArrayList<>();

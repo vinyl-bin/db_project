@@ -24,7 +24,7 @@
                 <option value="">카테고리 선택</option>
                 <option th:each="feed : ${feeds}"
                         th:value="${feed.feed_id}"
-                        th:text="${feed.feedClCodeNm}" />
+                        th:text="${feed.feedNm}" />
             </select>
 
         <label for="text">내용</label>

@@ -10,16 +10,16 @@
             <tr><th>#</th>
                 <th>상위 분류명</th>
                 <th>원료명</th>
-                <th>상세 분류명</th>
+                <th>상세분류명</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="feed : ${feeds}">
                 <td th:text="${feed.feed_id}"></td>
-                <td th:text="${feed.upperFeedClCode}"></td>
-                <td th:text="${feed.feedClCode}"></td>
                 <td th:text="${feed.feedClCodeNm}"></td>
+                <td th:text="${feed.feedNm}"></td>
+                <td th:text="${feed.crfbQy}"></td>
 
             </tr>
             </tbody>
