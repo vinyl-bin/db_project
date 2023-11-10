@@ -31,7 +31,7 @@ public class BoardService {
      */
 
     @Transactional
-    public Board writeBoard(String title, String text, Long user_id, Long feed_id) {
+    public Board writeBoard(String title, String text, Long user_id, long feed_id) {
 
         //엔티티 조회
         User user = userRepository.findOne(user_id);
@@ -56,7 +56,7 @@ public class BoardService {
      */
 
     @Transactional
-    public Board updateWriteBoard(String title, String text, Long user_id, Long feed_id, Long board_id, Long boardFeed_id) {
+    public Board updateWriteBoard(String title, String text, Long user_id, long feed_id, Long board_id, Long boardFeed_id) {
 
         //엔티티 조회
         User user = userRepository.findOne(user_id);

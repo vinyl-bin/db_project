@@ -55,7 +55,7 @@ public class BoardController {
 
     @PostMapping("/board/write")
     public String board(@Valid BoardForm form,
-                        @RequestParam("feeds") Long feed_id) {
+                        @RequestParam("feeds") long feed_id) {
 
         User user = new User();
         user.setName(form.getUserName());
@@ -89,7 +89,7 @@ public class BoardController {
         boardForm.setText(board.getText());
 
         //feedId 찾기
-        Long feed_id = board.getBoardFeed().getFeed().getFeed_id();
+        long feed_id = board.getBoardFeed().getFeed().getFeed_id();
 
         //feed 정보 불러오기
         Feed originFeed = feedService.findOne(feed_id);
@@ -106,7 +106,7 @@ public class BoardController {
     @PostMapping("board/{boardId}/edit")
     public String updateItem(@PathVariable String boardId,
                              @ModelAttribute("boardForm") BoardForm boardForm,
-                             @RequestParam("feeds") Long feed_id) {
+                             @RequestParam("feeds") long feed_id) {
 
         //user_id 구하기
         Long boardIdL = Long.parseLong(boardId);

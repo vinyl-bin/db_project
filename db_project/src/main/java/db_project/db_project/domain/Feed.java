@@ -16,57 +16,62 @@ import static javax.persistence.FetchType.LAZY;
 @Getter @Setter
 public class Feed {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feed_id")
-    private Long feed_id;
+    private long feed_id;
 
-    @Column(nullable = true)
-    private int mtralPc;
-    @Column(nullable = true)
-    private float clciQy;
-    @Column(nullable = true)
-    private float naQy;
-    @Column(nullable = true)
-    private float dryMatter;
-    @Column(nullable = true)
-    private float ashsQy;
-    @Column(nullable = true)
+//    @Id
+    @Column(name = "feedSeqNo")
     private int feedSeqNo;
-    @Column(nullable = true)
-    private float crfbQy;
-    @Column(nullable = true)
-    private float totEdblfibrQy;
-    @Column(nullable = true)
+
+    @Column(nullable = true, name = "mtralPc")
+    private int mtralPc;
+    @Column(nullable = true, name = "clciQy")
+    private double clciQy;
+    @Column(nullable = true, name = "naQy")
+    private double naQy;
+    @Column(nullable = true, name = "dryMatter")
+    private double dryMatter;
+    @Column(nullable = true, name = "ashsQy")
+    private double ashsQy;
+    @Column(nullable = true, name = "crfbQy")
+    private double crfbQy;
+    @Column(nullable = true, name = "totEdblfibrQy")
+    private double totEdblfibrQy;
+    @Column(nullable = true, name = "feedClCode")
     private int feedClCode;
-    @Column(nullable = true)
-    private float ptssQy;
-    @Column(nullable = true)
-    private float mitrQy;
-    @Column(nullable = true)
-    private float slwtEdblfibrQy;
-    @Column(nullable = true)
-    private float liacQy;
-    @Column(nullable = true)
+    @Column(nullable = true, name = "ptssQy")
+    private double ptssQy;
+    @Column(nullable = true, name = "mitrQy")
+    private double mitrQy;
+    @Column(nullable = true, name = "slwtEdblfibrQy")
+    private double slwtEdblfibrQy;
+    @Column(nullable = true, name = "liacQy")
+    private double liacQy;
+    @Column(nullable = true, name = "upperFeedClCode")
     private int upperFeedClCode;
-    @Column(nullable = true)
-    private float fatQy;
-    @Column(nullable = true)
-    private float lnacQy;
-    @Column(nullable = true)
-    private float vtmaQy;
-    @Column(nullable = true)
-    private float trypQy;
+    @Column(nullable = true, name = "fatQy")
+    private double fatQy;
+    @Column(nullable = true, name = "lnacQy")
+    private double lnacQy;
+    @Column(nullable = true, name = "vtmaQy")
+    private double vtmaQy;
+    @Column(nullable = true, name = "trypQy")
+    private double trypQy;
+    @Column(nullable = false, name = "feedNm")
     private String feedNm;
-    @Column(nullable = true)
-    private float crbQy;
+    @Column(nullable = true, name = "crbQy")
+    private double crbQy;
+    @Column(nullable = false, name = "feedClCodeNm")
     private String feedClCodeNm;
-    @Column(nullable = true)
-    private float phphQy;
-    @Column(nullable = true)
-    private float protQy;
+    @Column(nullable = true, name = "phphQy")
+    private double phphQy;
+    @Column(nullable = true, name = "protQy")
+    private double protQy;
+    @Column(nullable = true, name = "originNm")
     private String originNm;
-    @Column(nullable = true)
-    private float inslbltyEdblfibrQy;
+    @Column(nullable = true, name = "inslbltyEdblfibrQy")
+    private double inslbltyEdblfibrQy;
 
     @OneToMany(mappedBy = "feed")
     private List<BoardFeed> boardFeeds = new ArrayList<>();

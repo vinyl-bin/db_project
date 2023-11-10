@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://3.135.60.251:3306/DBproject?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/dbProject_final?serverTimezone=UTC&characterEncoding=UTF-8
     username: dabin
     password: dabin1234
   jpa:
@@ -9,7 +9,10 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+      naming:
+#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: true
@@ -19,3 +22,4 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+

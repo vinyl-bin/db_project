@@ -18,7 +18,7 @@ public class FeedRepository {
         em.persist(feed);
     }
 
-    public Feed findOne(Long feed_id) {
+    public Feed findOne(long feed_id) {
         return em.find(Feed.class, feed_id);
     }
 

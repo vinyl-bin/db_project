@@ -20,8 +20,8 @@ public class FeedService {
         feedRepository.save(feed);
     }
 
-    public Feed findOne(Long feedId) {
-        return feedRepository.findOne(feedId);
+    public Feed findOne(long feed_id) {
+        return feedRepository.findOne(feed_id);
     }
 
     public List<Feed> findFeeds() {
