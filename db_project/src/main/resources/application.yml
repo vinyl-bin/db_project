@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dbproject_2?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://3.135.60.251:3306/DBproject?serverTimezone=UTC&characterEncoding=UTF-8
     username: dabin
     password: dabin1234
   jpa:

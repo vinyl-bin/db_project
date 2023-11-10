@@ -18,31 +18,31 @@ public class Feed {
     @Column(name = "feed_id")
     private Long feed_id;
 
-    private String mtralPc;
-    private String clciQy;
-    private String naQy;
-    private String dryMatter;
-    private String ashsQy;
-    private String feedSeqNo;
-    private String crfbQy;
-    private String totEdblfibrQy;
-    private String feedClCode;
-    private String ptssQy;
-    private String mitrQy;
-    private String slwtEdblfibrQy;
-    private String liacQy;
-    private String upperFeedClCode;
-    private String fatQy;
-    private String lnacQy;
-    private String vtmaQy;
-    private String trypQy;
+    private int mtralPc;
+    private float clciQy;
+    private float naQy;
+    private float dryMatter;
+    private float ashsQy;
+    private int feedSeqNo;
+    private float crfbQy;
+    private float totEdblfibrQy;
+    private int feedClCode;
+    private float ptssQy;
+    private float mitrQy;
+    private float slwtEdblfibrQy;
+    private float liacQy;
+    private int upperFeedClCode;
+    private float fatQy;
+    private float lnacQy;
+    private float vtmaQy;
+    private float trypQy;
     private String feedNm;
-    private String crbQy;
+    private float crbQy;
     private String feedClCodeNm;
-    private String phphQy;
-    private String protQy;
+    private float phphQy;
+    private float protQy;
     private String originNm;
-    private String inslbltyEdblfibrQy;
+    private float inslbltyEdblfibrQy;
 
     @OneToMany(mappedBy = "feed")
     private List<BoardFeed> boardFeeds = new ArrayList<>();

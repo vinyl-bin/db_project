@@ -58,7 +58,7 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
 
 
         }
-        else if (searchType == searchType.TIT) {
+        else if (searchType == searchType.TITLE) {
             return titleCt(content);
         }
         else {
@@ -71,7 +71,7 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
     }
 
     BooleanBuilder feedCt(String content) {
-        return nullSafeBuilder(() -> boardFeed.feed.feedClCode.contains(content));
+        return nullSafeBuilder(() -> boardFeed.feed.feedClCodeNm.contains(content));
     }
 
     public void save(BoardFeed boardFeed) {
