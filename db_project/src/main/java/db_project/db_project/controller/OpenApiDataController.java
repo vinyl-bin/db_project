@@ -51,11 +51,9 @@ public class OpenApiDataController {
             JsonNode rootNode = objectMapper.readTree(json);
             JsonNode itemArrayNode = rootNode.path("body").path("items").path("item");
 
-
             JSONArray jsonArray = new JSONArray(itemArrayNode.toString());
             for (int i = 0; i < jsonArray.length(); i++) { // jsonArray.length()
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                JSONObject o = jsonArray.getJSONObject(i);
                 Integer mtralPc = getIntegerValue(jsonObject, "mtralPc");
                 Double clciQy = getDoubleValue(jsonObject, "clciQy");
                 Double naQy = getDoubleValue(jsonObject, "naQy");
@@ -101,13 +99,13 @@ public class OpenApiDataController {
         if (!value.equals("")) {
             return Integer.parseInt(String.valueOf(value));
         }
-        return - 1;
+        return null;
     }
 
     private static Double getDoubleValue(JSONObject jsonObject, String key) {
         String value = String.valueOf(jsonObject.get(key));
         if (value.equals("")) {
-            return - 0.1;
+            return null;
         }
         return Double.parseDouble(value);
     }
