@@ -1,6 +1,8 @@
 package db_project.db_project.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
@@ -14,6 +16,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Feed {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,11 +78,36 @@ public class Feed {
     @OneToMany(mappedBy = "feed")
     private List<BoardFeed> boardFeeds = new ArrayList<>();
 
-
-    //==연관관계 메서드==//
-//    public void addBoardFeeds(BoardFeed boardFeeds) {
-//        this.boardFeeds.add(boardFeeds);
-//        boardFeeds.belongToFeed(this);
-//    }
+    public Feed(Integer mtralPc, Double clciQy, Double naQy, Double dryMatter, Double ashsQy, Integer feedSeqNo, Double crfbQy, Double totEdblfibrQy, Integer feedClCode,
+                Double ptssQy, Double mitrQy, Double slwtEdblfibrQy, Double liacQy, Integer upperFeedClCode, Double fatQy, Double lnacQy,
+                Double vtmaQy, Double trypQy, String feedNm, Double crbQy, String feedClCodeNm, Double phphQy, Double protQym,
+                String originNm, Double inslbltyEdblfibrQy)
+    {
+        this.mtralPc = mtralPc;
+        this.clciQy = clciQy;
+        this.naQy = naQy;
+        this.dryMatter = dryMatter;
+        this.ashsQy = ashsQy;
+        this.feedSeqNo = feedSeqNo;
+        this.crfbQy = crfbQy;
+        this.totEdblfibrQy = totEdblfibrQy;
+        this.feedClCode = feedClCode;
+        this.ptssQy = ptssQy;
+        this.mitrQy = mitrQy;
+        this.slwtEdblfibrQy = slwtEdblfibrQy;
+        this.liacQy = liacQy;
+        this.upperFeedClCode = upperFeedClCode;
+        this.fatQy = fatQy;
+        this.lnacQy = lnacQy;
+        this.vtmaQy = vtmaQy;
+        this.trypQy = trypQy;
+        this.feedNm = feedNm;
+        this.crbQy = crbQy;
+        this.feedClCodeNm = feedClCodeNm;
+        this.phphQy = phphQy;
+        this.protQy = protQym;
+        this.originNm = originNm;
+        this.inslbltyEdblfibrQy = inslbltyEdblfibrQy;
+    }
 
 }
