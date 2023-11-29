@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class OpenApiDataController {
 
             String StringifyResult = result.toString();
             XmlMapper xmlMapper = new XmlMapper();
-            JsonNode node = xmlMapper.readTree(StringifyResult.getBytes());
+            JsonNode node = xmlMapper.readTree(StringifyResult.getBytes(StandardCharsets.UTF_8));  //인코딩 방식 utf-8로 변경
 
             ObjectMapper jsonMapper = new ObjectMapper();
             String json = jsonMapper.writeValueAsString(node);
