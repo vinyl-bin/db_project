@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,6 @@ public class BoardController {
     private final UserService userService;
     @Autowired
     private final BoardFeedService boardFeedService;
-//    private final BoardRepository boardRepository;
 
     @Autowired
     BoardFeedRepositoryImpl boardFeedRepository;
@@ -55,22 +55,34 @@ public class BoardController {
 
     @PostMapping("/board/write")
     public String board(@Valid BoardForm form,
-                        @RequestParam("feeds") long feed_id) {
+                        @RequestParam("feeds") long feed_id, HttpSession session) {
 
-        User user = new User();
-        user.setName(form.getUserName());
-        user.setPassword(form.getPassword());
+//        User user = new User();
+//        user.setName(form.getUserName());
+//        user.setPassword(form.getPassword());
+//
+//        userService.join(user);
+        if(session.getAttribute("userId") == null) {
+            return "redirect:/login";
+        }
 
-        userService.join(user);
+        long userId = (long) session.getAttribute("userId");
+        System.out.println("gd" + userId);
 
-        boardService.writeBoard(form.getTitle(), form.getText(), user.getUser_id(), feed_id);
+        boardService.writeBoard(form.getTitle(), form.getText(), userId, feed_id);
 
-        return "redirect:/";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/board/list")
-    public String boardList(@ModelAttribute ("searchCondition") SearchCondition searchCondition , Model model) {
+    public String boardList(@ModelAttribute ("searchCondition") SearchCondition searchCondition , Model model, HttpSession session) {
         List<BoardFeed> boardFeeds = boardService.findBoards(searchCondition);
+
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("currentUserId", (long) session.getAttribute("userId"));
         model.addAttribute("boardFeeds", boardFeeds);
 
         return "board/boardSearchList";
@@ -84,8 +96,6 @@ public class BoardController {
 
         BoardForm boardForm = new BoardForm();
         boardForm.setTitle(board.getTitle());
-        boardForm.setUserName(board.getUser().getName());
-        boardForm.setPassword(board.getUser().getPassword());
         boardForm.setText(board.getText());
 
         //feedId 찾기
@@ -106,7 +116,8 @@ public class BoardController {
     @PostMapping("board/{boardId}/edit")
     public String updateItem(@PathVariable String boardId,
                              @ModelAttribute("boardForm") BoardForm boardForm,
-                             @RequestParam("feeds") long feed_id) {
+                             @RequestParam("feeds") long feed_id,
+                             HttpSession session) {
 
         //user_id 구하기
         Long boardIdL = Long.parseLong(boardId);
@@ -117,17 +128,13 @@ public class BoardController {
         //boardFeed_id 구하기
         Long boardFeed_id = gboard.getBoardFeed().getBoardFeed_id();
 
+        if (session.getAttribute("userId") == null) {
+            return  "redirect:/login";
+        }
 
+        long userId = (long) session.getAttribute("userId");
 
-        User user = new User();
-        user.setUser_id(guser_id);
-        user.setName(boardForm.getUserName());
-        user.setPassword(boardForm.getPassword());
-
-        userService.createUser(user);
-
-
-        boardService.updateWriteBoard(boardForm.getTitle(), boardForm.getText(), user.getUser_id(), feed_id, boardIdL, boardFeed_id);
+        boardService.updateWriteBoard(boardForm.getTitle(), boardForm.getText(), userId, feed_id, boardIdL, boardFeed_id);
 
         return "redirect:/board/list";
     }
