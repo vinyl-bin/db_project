@@ -93,6 +93,7 @@ public class BoardController {
         BoardForm boardForm = new BoardForm();
         boardForm.setTitle(board.getTitle());
         boardForm.setText(board.getText());
+        boardForm.setFilePath(board.getImagePath());
 
         //feedId 찾기
         long feed_id = board.getBoardFeed().getFeed().getFeed_id();

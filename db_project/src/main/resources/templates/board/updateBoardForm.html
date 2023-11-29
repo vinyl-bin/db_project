@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <form th:object="${boardForm}" method="post">
+    <form th:object="${boardForm}" method="post" enctype="multipart/form-data">
 
         <label for="title">제목</label>
         <input type="text" th:field="*{title}" class="form-control" id="title"
@@ -25,8 +25,14 @@
 
             <label for="image_id">이미지</label>
             <input type="file" th:field="*{fileSave}" id="image_id" name="fileName">
-            <div class="selectImage"><img src=""/></div>
+            <div class="selectImage"><img id="origin" th:src="*{filePath}"/></div>
             <script>
+
+                $(document).ready(function() {
+                    var filePath = $("#origin").attr("src");
+                    $(".selectImage img").attr("src", filePath).width(500);
+                });
+
                 $("#image_id").change(function(){
                     if(this.files && this.files[0]) {
                         var reader = new FileReader;
