@@ -19,6 +19,8 @@ public class User {
 
     private String password;
 
+    private String email;
+
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 

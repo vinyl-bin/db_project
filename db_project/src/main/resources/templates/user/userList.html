@@ -7,18 +7,22 @@
     <div>
         <table class="table table-striped">
             <thead>
-            <tr><th>#</th>
-                <th>이름</th>
-                <th>게시판 정보</th>
+            <tr><th>이름</th>
+                <th>이메일</th>
+                <th>게시판 제목</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user : ${users}">
-                <td th:text="${user.user_id}"></td>
                 <td th:text="${user.name}"></td>
-                <td th:text="${user.boards}"></td>
-
+                <td th:text="${user.email}"></td>
+                <td>
+                    <span th:each="board : ${user.getBoards()}">
+                        <span th:text="${board.title}"></span>
+                        <span th:if="${not #strings.isEmpty(board.title)}"><br></span>
+                    </span>
+                </td>
             </tr>
             </tbody>
         </table>

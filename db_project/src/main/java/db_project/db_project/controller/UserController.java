@@ -37,6 +37,7 @@ public class UserController {
         User user = new User();
         user.setName(form.getName());
         user.setPassword(form.getPassword());
+        user.setEmail(form.getEmail());
 
         userService.join(user);
 
