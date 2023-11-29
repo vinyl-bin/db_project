@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <form role="form" action="/board/write" th:object="${form}" method="post">
+    <form role="form" action="/board/write" th:object="${form}" method="post" enctype="multipart/form-data">
 
         <label for="title">제목</label>
         <input type="text" th:field="*{title}" class="form-control" id="title"
@@ -23,9 +23,23 @@
         <textarea th:field="*{text}" class="form-control" id="text"
                   placeholder="내용" style="height: 500px"></textarea>
 
+        <label for="image_id">이미지</label>
+            <input type="file" th:field="*{fileSave}" id="image_id" name="fileName">
+        <div class="selectImage"><img src=""/></div>
+            <script>
+                $("#image_id").change(function(){
+                    if(this.files && this.files[0]) {
+                        var reader = new FileReader;
+                        reader.onload = function(data) {
+                            $(".selectImage img").attr("src", data.target.result).width(500);
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            </script>
 
 
-    </div>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br/>

@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.Null;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -24,6 +22,10 @@ public class Board {
 
     @Column(columnDefinition = "LONGTEXT")
     private String text;
+
+    private String imageName;
+
+    private String imagePath;
 
 
     /**
@@ -54,12 +56,25 @@ public class Board {
 
 
     //==생성 메서드==//
+    public static Board createBoardWithFile(User user, BoardFeed boardFeed, String title, String text, String fileName, String filePath) {
+        Board board = new Board();
+        board.setUser(user);
+        board.addBoardFeed(boardFeed);
+        board.setTitle(title);
+        board.setText(text);
+        board.setImageName(fileName);
+        board.setImagePath(filePath);
+        return board;
+    }
+
     public static Board createBoard(User user, BoardFeed boardFeed, String title, String text) {
         Board board = new Board();
         board.setUser(user);
         board.addBoardFeed(boardFeed);
         board.setTitle(title);
         board.setText(text);
+        board.setImageName(null);
+        board.setImagePath(null);
         return board;
     }
 

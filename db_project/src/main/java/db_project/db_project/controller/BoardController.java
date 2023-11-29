@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
@@ -55,13 +56,8 @@ public class BoardController {
 
     @PostMapping("/board/write")
     public String board(@Valid BoardForm form,
-                        @RequestParam("feeds") long feed_id, HttpSession session) {
+                        @RequestParam("feeds") long feed_id, HttpSession session) throws Exception {    //꼭 예외처리 해야 함. writeBoard가 예외처리를 꼭 해야하기 때문.
 
-//        User user = new User();
-//        user.setName(form.getUserName());
-//        user.setPassword(form.getPassword());
-//
-//        userService.join(user);
         if(session.getAttribute("userId") == null) {
             return "redirect:/login";
         }
@@ -69,7 +65,7 @@ public class BoardController {
         long userId = (long) session.getAttribute("userId");
         System.out.println("gd" + userId);
 
-        boardService.writeBoard(form.getTitle(), form.getText(), userId, feed_id);
+        boardService.writeBoard(form.getTitle(), form.getText(), userId, feed_id, form.getFileSave());
 
         return "redirect:/board/list";
     }
@@ -122,7 +118,7 @@ public class BoardController {
         //user_id 구하기
         Long boardIdL = Long.parseLong(boardId);
         Board gboard = boardService.findOne(boardIdL);
-        Long guser_id = gboard.getUser().getUser_id();
+//        Long guser_id = gboard.getUser().getUser_id();
 
 
         //boardFeed_id 구하기
@@ -134,7 +130,7 @@ public class BoardController {
 
         long userId = (long) session.getAttribute("userId");
 
-        boardService.updateWriteBoard(boardForm.getTitle(), boardForm.getText(), userId, feed_id, boardIdL, boardFeed_id);
+        boardService.updateWriteBoard(boardForm.getTitle(), boardForm.getText(), userId, feed_id, boardIdL, boardFeed_id, boardForm.getFileName(), boardForm.getFilePath());
 
         return "redirect:/board/list";
     }
