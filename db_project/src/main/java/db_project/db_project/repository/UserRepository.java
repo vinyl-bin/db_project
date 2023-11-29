@@ -45,4 +45,10 @@ public class UserRepository {
         return users;
     }
 
+    public User findOneByUserName(String userName) {
+        return em.createQuery("select u from User u where u.name = :userName", User.class)
+                .setParameter("userName", userName)
+                .getSingleResult();
+    }
+
 }

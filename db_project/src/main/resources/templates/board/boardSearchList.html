@@ -43,7 +43,7 @@
 
 
 <!--                        수정 버튼-->
-                        <td>
+                        <td th:if="${currentUserId == boardFeed.board.user.getUser_id()}">
                             <a href="#" th:href="@{/board/{id}/edit (id=${boardFeed.getBoard().getBoard_id()})}"
                                class="btn btn-primary" role="button">수정</a>
                         </td>

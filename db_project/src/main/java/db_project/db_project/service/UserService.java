@@ -61,6 +61,16 @@ public class UserService {
 
     }
 
+    public User login(String userName, String password) {
+        User user = userRepository.findOneByUserName(userName);
+        if(!user.getPassword().equals(password)){
+            System.out.println("Wrong password");
+            user = null;
+        }
+        return user;
+    }
+
+
     /**
      * 전체 user 조회
      */
