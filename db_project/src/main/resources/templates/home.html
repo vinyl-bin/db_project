@@ -3,19 +3,31 @@
 <head th:replace="fragments/header :: header">
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <style>
-        #userButton > a{
-            text-decoration: none;
-            background-color: #0b5ed7;
-            border-radius: 5px;
-            margin:0%;
-            color: black;
-            text-align: center;
-            font-size: 15px;
-            padding: 15px;
-        }
-    </style>
 </head>
+<style>
+    #userButton > a{
+        text-decoration: none;
+        background-color: #0b5ed7;
+        border-radius: 5px;
+        margin:0%;
+        color: black;
+        text-align: center;
+        font-size: 15px;
+        padding: 15px;
+    }
+</style>
+<script>
+    window.onload = function() {
+        // URL에서 warningMessage 파라미터를 가져옴
+        var urlParams = new URLSearchParams(window.location.search);
+        var warningMessage = urlParams.get('warningMessage');
+
+        // 경고 메시지가 있을 경우에만 표시
+        if (warningMessage) {
+            alert(warningMessage);
+        }
+    }
+</script>
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
@@ -27,9 +39,9 @@
         </div>
 
         <p id="userButton" style="text-align-all: center">
-            <a th:if="${currentUserId == null}" href="/user/new"  style="text-decoration: none; background-color: #0b5ed7; border-radius: 5px; margin: 0; color: black; text-align: center; font-size: 15px; padding: 15px;">회원가입</a>
-            <a th:if="${currentUserId == null}" href="/login" style="text-decoration: none; background-color: #0b5ed7; border-radius: 5px; margin: 0; color: black; text-align: center; font-size: 15px; padding: 15px;">로그인</a>
-            <a th:if="${currentUserId != null}" href="/logout" style="text-decoration: none; background-color: #0b5ed7; border-radius: 5px; margin: 0; color: black; text-align: center; font-size: 15px; padding: 15px;">로그아웃</a>
+            <a th:if="${currentUserId == null}" href="/user/new">회원가입</a>
+            <a th:if="${currentUserId == null}" href="/login">로그인</a>
+            <a th:if="${currentUserId != null}" href="/logout">로그아웃</a>
         </p>
 
         <p class="lead"></p>

@@ -41,7 +41,7 @@ public class UserController {
 
         userService.join(user);
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping("/users")

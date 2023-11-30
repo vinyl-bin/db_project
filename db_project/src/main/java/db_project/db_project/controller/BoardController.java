@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +47,16 @@ public class BoardController {
     UserRepository userRepository;
 
     @GetMapping("/board/write")
-    public String createForm(Model model) {
+    public String createForm(Model model, HttpSession session) {
         List<Feed> feeds = feedService.findFeeds();
+
+        if (session.getAttribute("userId") == null) {
+
+            String warningMessage = "로그인이 필요합니다.";
+
+            String encodedMessage = URLEncoder.encode(warningMessage, StandardCharsets.UTF_8);
+            return "redirect:/?warningMessage=" + encodedMessage;
+        }
 
         model.addAttribute("form", new BoardForm());
         model.addAttribute("feeds", feeds);
@@ -75,7 +85,11 @@ public class BoardController {
         List<BoardFeed> boardFeeds = boardService.findBoards(searchCondition);
 
         if (session.getAttribute("userId") == null) {
-            return "redirect:/login";
+
+            String warningMessage = "로그인이 필요합니다.";
+
+            String encodedMessage = URLEncoder.encode(warningMessage, StandardCharsets.UTF_8);
+            return "redirect:/?warningMessage=" + encodedMessage;
         }
 
         model.addAttribute("currentUserId", (long) session.getAttribute("userId"));
