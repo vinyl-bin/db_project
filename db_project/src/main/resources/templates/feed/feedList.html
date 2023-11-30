@@ -1,66 +1,85 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"/>
+<style>
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    th, td {
+        text-align: center;
+        width: 200px;
+    }
+</style>
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <div>
-        <table class="table table-striped">
-            <thead>
-            <tr><th>#</th>
-                <th>원료명</th>
+</div>
+<div>
+    <table>
+        <thead>
+        <tr><th style="width: 70px">#</th>
+            <th>원료명</th>
 
-                <th>건물(%)</th>
-                <th>수분(%)</th>
-                <th>단백질(%)</th>
-                <th>트립토판(%)</th>
-                <th>칼슘(%)</th>
-                <th>인(%)</th>
-                <th>지방(%)</th>
-                <th>리놀레산(%)</th>
-                <th>리놀렌산(%)</th>
-                <th>회분(%)</th>
-                <th>비타민 A(RE/100g)</th>
-                <th>탄수화물(%)</th>
-                <th>조섬유(%)</th>
-                <th>총식이섬유(%)</th>
-                <th>불용성식이섬유(%)</th>
-                <th>수용성식이섬유(%)</th>
-                <th>나트륨(%)</th>
-                <th>칼륨(%)</th>
+            <th>건물(%)</th>
+            <th>수분(%)</th>
+            <th>단백질(%)</th>
+            <th>트립토판(%)</th>
+            <th>칼슘(%)</th>
+            <th>인(%)</th>
+            <th>지방(%)</th>
+            <th>리놀레산(%)</th>
+            <th>리놀렌산(%)</th>
+            <th>회분(%)</th>
+            <th>비타민 A(RE/100g)</th>
+            <th>탄수화물(%)</th>
+            <th style="width: 70px">조섬유(%)</th>
+            <th style="width: 70px">총식이섬유(%)</th>
+            <th style="width: 70px">불용성식이섬유(%)</th>
+            <th style="width: 70px">수용성식이섬유(%)</th>
+            <th>나트륨(%)</th>
+            <th>칼륨(%)</th>
 
 
 
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="feed : ${feeds}">
-                <td th:text="${feed.feed_id}"></td>
-                <td th:text="${feed.feedNm}"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="feed : ${feeds}">
+            <td th:text="${feed.feed_id}" style="width: 70px"></td>
+            <td th:text="${feed.feedNm}"></td>
 
-                <td th:text="${feed.dryMatter}"></td>
-                <td th:text="${feed.mitrQy}"></td>
-                <td th:text="${feed.protQy}"></td>
-                <td th:text="${feed.trypQy}"></td>
-                <td th:text="${feed.clciQy}"></td>
-                <td th:text="${feed.phphQy}"></td>
-                <td th:text="${feed.fatQy}"></td>
-                <td th:text="${feed.lnacQy}"></td>
-                <td th:text="${feed.liacQy}"></td>
-                <td th:text="${feed.ashsQy}"></td>
-                <td th:text="${feed.vtmaQy}"></td>
-                <td th:text="${feed.crbQy}"></td>
-                <td th:text="${feed.crfbQy}"></td>
-                <td th:text="${feed.totEdblfibrQy}"></td>
-                <td th:text="${feed.inslbltyEdblfibrQy}"></td>
-                <td th:text="${feed.slwtEdblfibrQy}"></td>
-                <td th:text="${feed.naQy}"></td>
-                <td th:text="${feed.ptssQy}"></td>
+            <td th:text="${feed.dryMatter}"></td>
+            <td th:text="${feed.mitrQy}"></td>
+            <td th:text="${feed.protQy}"></td>
+            <td th:text="${feed.trypQy}"></td>
+            <td th:text="${feed.clciQy}"></td>
+            <td th:text="${feed.phphQy}"></td>
+            <td th:text="${feed.fatQy}"></td>
+            <td th:text="${feed.lnacQy}"></td>
+            <td th:text="${feed.liacQy}"></td>
+            <td th:text="${feed.ashsQy}"></td>
+            <td th:text="${feed.vtmaQy}"></td>
+            <td th:text="${feed.crbQy}"></td>
+            <td th:text="${feed.crfbQy}" style="width: 70px"></td>
+            <td th:text="${feed.totEdblfibrQy}" style="width: 70px"></td>
+            <td th:text="${feed.inslbltyEdblfibrQy}" style="width: 70px"></td>
+            <td th:text="${feed.slwtEdblfibrQy}" style="width: 70px"></td>
+            <td th:text="${feed.naQy}"></td>
+            <td th:text="${feed.ptssQy}"></td>
 
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container">
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
 </body>
