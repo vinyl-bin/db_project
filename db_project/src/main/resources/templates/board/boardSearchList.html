@@ -49,6 +49,12 @@
                                class="btn btn-primary" role="button">수정</a>
                         </td>
 
+                        <!-- 보기 -->
+                        <td>
+                            <a href="#" th:href="@{/board/{id}/view (id=${boardFeed.getBoard().getBoard_id()})}"
+                               class="btn btn-primary" role="button">보기</a>
+                        </td>
+
 
 <!--                        //취소 버튼-->
 <!--                        <td>-->

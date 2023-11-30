@@ -155,5 +155,31 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/board/{boardId}/view")
+    public String boardFormView(@PathVariable("boardId") Long boardId, Model model) {
 
-}
+        //board 정보 불러오기
+        Board board = boardService.findOne(boardId);
+
+        BoardForm boardForm = new BoardForm();
+        boardForm.setTitle(board.getTitle());
+        boardForm.setText(board.getText());
+        boardForm.setFilePath(board.getImagePath());
+        boardForm.setFileName(board.getImageName());
+
+        //feedId 찾기
+        long feed_id = board.getBoardFeed().getFeed().getFeed_id();
+
+        //feed 정보 불러오기
+        Feed originFeed = feedService.findOne(feed_id);
+
+        //feeds 카테고리 위해서 리스트로 불러오기
+        List<Feed> feeds = feedService.findFeeds();
+
+        model.addAttribute("boardForm", boardForm);
+        model.addAttribute("originFeed", originFeed);
+        model.addAttribute("feeds", feeds);
+        return "board/boardFormView";
+    }
+
+    }

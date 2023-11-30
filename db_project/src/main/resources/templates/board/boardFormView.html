@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form th:object="${boardForm}" method="post" enctype="multipart/form-data">
+
+        <label for="title">제목</label>
+        <input type="text" th:field="*{title}" class="form-control" id="title"
+               placeholder="제목을 입력하세요" readonly>
+
+        <div class="form-group">
+            <label for="feeds">재료</label>
+            <select name="feeds" id="feeds" class="form-control">
+                <option th:text="${originFeed.feedNm}" readonly></option>
+
+                <option th:text="'건물% ' + ${originFeed.dryMatter}"></option>
+                <option th:text="'수분% ' + ${originFeed.mitrQy}"></option>
+                <option th:text="'단백질% ' + ${originFeed.protQy}"></option>
+                <option th:text="'트립토판% ' + ${originFeed.trypQy}"></option>
+                <option th:text="'칼슘% ' + ${originFeed.clciQy}"></option>
+                <option th:text="'인% ' + ${originFeed.phphQy}"></option>
+                <option th:text="'지방% ' + ${originFeed.fatQy}"></option>
+                <option th:text="'리놀레산% ' + ${originFeed.lnacQy}"></option>
+                <option th:text="'리놀렌산% ' + ${originFeed.liacQy}"></option>
+                <option th:text="'회분% ' + ${originFeed.ashsQy}"></option>
+                <option th:text="'비타민A ' + ${originFeed.vtmaQy}"></option>
+                <option th:text="'탄수화물% ' + ${originFeed.crbQy}"></option>
+                <option th:text="'조섬유% ' + ${originFeed.crfbQy}"></option>
+                <option th:text="'총식이섬유% ' + ${originFeed.totEdblfibrQy}"></option>
+                <option th:text="'불용성식이섬유% ' + ${originFeed.inslbltyEdblfibrQy}"></option>
+                <option th:text="'수용성식이섬유% ' + ${originFeed.slwtEdblfibrQy}"></option>
+                <option th:text="'나트륨% ' + ${originFeed.naQy}"></option>
+                <option th:text="'칼륨% ' + ${originFeed.ptssQy}"></option>
+
+
+            </select>
+
+            <label for="text">내용</label>
+            <textarea th:field="*{text}" class="form-control" id="text"
+                      placeholder="내용" style="height: 500px" readonly></textarea>
+
+            <label for="image_id">이미지</label>
+            <div id="image_id" class="selectImage"><img id="origin" style="width: 500px" th:src="*{filePath}"/></div>
+
+        </div>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>
