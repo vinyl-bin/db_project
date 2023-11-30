@@ -126,10 +126,10 @@ public class BoardService {
 
 
         //board 생성
-        if (fileName.equals(null)) {
+        if (fileName.equals(null) && fileSave.isEmpty()) {
             board = Board.createBoard(user, boardFeed, title, text);
         }
-        else if (fileSave.equals(null)) {
+        else if (fileSave.isEmpty()) {
             board = Board.createBoardWithFile(user, boardFeed, title, text, fileName, filePath);
         }
         else {
