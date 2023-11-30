@@ -94,6 +94,7 @@ public class BoardController {
         boardForm.setTitle(board.getTitle());
         boardForm.setText(board.getText());
         boardForm.setFilePath(board.getImagePath());
+        boardForm.setFileName(board.getImageName());
 
         //feedId 찾기
         long feed_id = board.getBoardFeed().getFeed().getFeed_id();
@@ -114,7 +115,7 @@ public class BoardController {
     public String updateItem(@PathVariable String boardId,
                              @ModelAttribute("boardForm") BoardForm boardForm,
                              @RequestParam("feeds") long feed_id,
-                             HttpSession session) {
+                             HttpSession session) throws Exception{
 
         //user_id 구하기
         Long boardIdL = Long.parseLong(boardId);
@@ -131,7 +132,11 @@ public class BoardController {
 
         long userId = (long) session.getAttribute("userId");
 
-        boardService.updateWriteBoard(boardForm.getTitle(), boardForm.getText(), userId, feed_id, boardIdL, boardFeed_id, boardForm.getFileName(), boardForm.getFilePath());
+        try {
+            boardService.updateWriteBoard(boardForm.getTitle(), boardForm.getText(), userId, feed_id, boardIdL, boardFeed_id, boardForm.getFileName(), boardForm.getFilePath(), boardForm.getFileSave());
+        } catch (Exception e) {
+            throw e;
+        }
 
         return "redirect:/board/list";
     }

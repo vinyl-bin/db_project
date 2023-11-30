@@ -111,7 +111,8 @@ public class BoardService {
      */
 
     @Transactional
-    public Board updateWriteBoard(String title, String text, Long user_id, long feed_id, Long board_id, Long boardFeed_id, String fileName, String filePath) {
+    public Board updateWriteBoard(String title, String text, Long user_id, long feed_id, Long board_id,
+                                  Long boardFeed_id, String fileName, String filePath, MultipartFile fileSave) throws Exception {
 
         Board board;
 
@@ -128,8 +129,28 @@ public class BoardService {
         if (fileName.equals(null)) {
             board = Board.createBoard(user, boardFeed, title, text);
         }
-        else {
+        else if (fileSave.equals(null)) {
             board = Board.createBoardWithFile(user, boardFeed, title, text, fileName, filePath);
+        }
+        else {
+
+            byte[] fileBytes = fileSave.getBytes();
+
+            // 파일 저장 부분
+            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+            UUID uuid = UUID.randomUUID();
+            String newFileName = uuid + "_" + fileSave.getOriginalFilename();
+
+            String saveFilePath = projectPath + newFileName;
+            String newFilePath = "/files/" + newFileName;
+
+            try {
+                Files.write(Paths.get(saveFilePath), fileBytes);
+            } catch (Exception e) {
+                throw e;
+            }
+
+            board = Board.createBoardWithFile(user, boardFeed, title, text, newFileName, newFilePath);
         }
 
         board.setBoard_id(board_id);
