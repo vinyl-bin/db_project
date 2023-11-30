@@ -164,6 +164,16 @@ public class BoardService {
         return board;
     }
 
+    @Transactional
+    public Board updateBoardCount(Board board) {
+        board.setViewCount(board.getViewCount()+1);
+
+        boardRepository.save(board);
+
+        return board;
+    }
+
+
     /**
      * 검색
      */

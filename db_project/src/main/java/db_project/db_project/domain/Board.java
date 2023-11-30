@@ -27,6 +27,8 @@ public class Board {
 
     private String imagePath;
 
+    private Long viewCount;
+
 
     /**
      * @JoinColumn은 연관관계주인인 엔티티가 다른 엔티티의 외래키를 가져올때 사용한다.
@@ -64,6 +66,7 @@ public class Board {
         board.setText(text);
         board.setImageName(fileName);
         board.setImagePath(filePath);
+        board.setViewCount(0L);
         return board;
     }
 
@@ -75,6 +78,7 @@ public class Board {
         board.setText(text);
         board.setImageName(null);
         board.setImagePath(null);
+        board.setViewCount(0L);
         return board;
     }
 

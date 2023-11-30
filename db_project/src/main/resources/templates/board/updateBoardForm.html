@@ -13,7 +13,7 @@
         <div class="form-group">
             <label for="feeds">카테고리</label>
             <select name="feeds" id="feeds" class="form-control">
-                <option value="">카테고리 선택</option>
+                <option th:value="${originFeed.feed_id}" th:text="${originFeed.feedNm}">카테고리 선택</option>
                 <option th:each="feed : ${feeds}"
                         th:value="${feed.feed_id}"
                         th:text="${feed.feedNm}" />

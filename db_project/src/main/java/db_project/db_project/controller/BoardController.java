@@ -161,6 +161,9 @@ public class BoardController {
         //board 정보 불러오기
         Board board = boardService.findOne(boardId);
 
+        //조회수 올리기
+        boardService.updateBoardCount(board);
+
         BoardForm boardForm = new BoardForm();
         boardForm.setTitle(board.getTitle());
         boardForm.setText(board.getText());
