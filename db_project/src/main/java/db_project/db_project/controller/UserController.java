@@ -54,13 +54,7 @@ public class UserController {
     @GetMapping("/login")
     public String loginPage(@ModelAttribute("loginForm") LoginForm form, HttpSession session) {
 
-        if(session.getAttribute("userId") == null) {
-            return "user/login";
-        }
-
-        long loginUser = (long) session.getAttribute("userId");
-
-        return "redirect:/";
+        return "user/login";
     }
 
     @PostMapping("/login")
