@@ -22,7 +22,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/user/new")
+    @GetMapping("/user/new") //회원가입
     public String createForm(Model model) {
         model.addAttribute("userForm", new UserForm());
         return "user/createUserForm";

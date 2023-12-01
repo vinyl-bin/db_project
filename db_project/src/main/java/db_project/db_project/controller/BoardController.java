@@ -155,6 +155,31 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+
+    @RequestMapping("/board/{boardId}/delete")
+    public String deleteBoardList(@PathVariable String boardId) {
+
+        //user_id 구하기
+        Long boardIdL = Long.parseLong(boardId);
+        Board board = boardService.findOne(boardIdL);
+
+
+        //boardFeed_id 구하기
+        Long boardFeed_id = board.getBoardFeed().getBoardFeed_id();
+        BoardFeed boardFeed = boardFeedRepository.findOne(boardFeed_id);
+
+        try {
+            boardFeedService.deleteBoardFeed(boardFeed);
+            boardService.deleteBoard(board);
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return "redirect:/board/list";
+    }
+
+
     @GetMapping("/board/{boardId}/view")
     public String boardFormView(@PathVariable("boardId") Long boardId, Model model) {
 

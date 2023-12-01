@@ -173,6 +173,14 @@ public class BoardService {
         return board;
     }
 
+    @Transactional
+    public Board deleteBoard(Board board) {
+
+        boardRepository.delete(board);
+
+        return board;
+    }
+
 
     /**
      * 검색

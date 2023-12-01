@@ -1,5 +1,6 @@
 package db_project.db_project.service;
 
+import db_project.db_project.domain.Board;
 import db_project.db_project.domain.BoardFeed;
 import db_project.db_project.domain.SearchCondition;
 import db_project.db_project.domain.User;
@@ -22,6 +23,14 @@ public class BoardFeedService {
     @Transactional
     public void save(BoardFeed boardFeed) {
         boardFeedRepository.save(boardFeed);
+    }
+
+    @Transactional
+    public BoardFeed deleteBoardFeed(BoardFeed boardFeed) {
+
+        boardFeedRepository.delete(boardFeed);
+
+        return boardFeed;
     }
 
 

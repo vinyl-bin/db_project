@@ -83,6 +83,10 @@ public class BoardFeedRepositoryImpl implements BoardFeedCustomRepository{
         }
     }
 
+    public void delete(BoardFeed boardFeed) {
+        em.remove(boardFeed);
+    }
+
     public BoardFeed findOne(Long boardFeed_id) {
         return em.find(BoardFeed.class, boardFeed_id);
     }

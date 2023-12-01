@@ -31,6 +31,10 @@ public class BoardRepository {
         return em.find(Board.class, board_id);
     }
 
+    public void delete(Board board) {
+        em.remove(board);
+    }
+
 
     // Board 목록 보여주는 기는은 BoardFeedRepositoryImpl에 있음(검색기능도 추가함)
 
