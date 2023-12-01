@@ -13,14 +13,21 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: update
-#      ddl-auto: create
+#      ddl-auto: update
+      ddl-auto: create
       naming:
 #        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: true
+  security:
+    ignored: /**
+    user:
+      password:
+        encoder:
+          enabled: true
+          algorithm: sha-256
 
 
 logging:

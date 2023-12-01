@@ -5,22 +5,28 @@ import db_project.db_project.dto.LoginForm;
 import db_project.db_project.dto.UserForm;
 import db_project.db_project.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/user/new") //회원가입
     public String createForm(Model model) {
@@ -36,7 +42,8 @@ public class UserController {
 
         User user = new User();
         user.setName(form.getName());
-        user.setPassword(form.getPassword());
+        String secret = passwordEncoder.encode(form.getPassword());
+        user.setPassword(secret);
         user.setEmail(form.getEmail());
 
         userService.join(user);
@@ -52,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(@ModelAttribute("loginForm") LoginForm form, HttpSession session) {
+    public String loginPage(@ModelAttribute("loginForm") LoginForm form) {
 
         return "user/login";
     }
@@ -68,7 +75,11 @@ public class UserController {
 
             if (loginUser == null) {
                 bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-                return "redirect:/login";
+
+                String warningMessage = "아이디 또는 비밀번호가 맞지 않습니다.";
+
+                String encodedMessage = URLEncoder.encode(warningMessage, StandardCharsets.UTF_8);
+                return "redirect:/login?loginFailMessage=" + encodedMessage;
             }
 
             session.setAttribute("userId", loginUser.getUser_id());

@@ -1,10 +1,22 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
+<script>
+  window.onload = function() {
+    // URL에서 warningMessage 파라미터를 가져옴
+    var urlParams = new URLSearchParams(window.location.search);
+    var warningMessage = urlParams.get('loginFailMessage');
+
+    // 경고 메시지가 있을 경우에만 표시
+    if (warningMessage) {
+      alert(warningMessage);
+    }
+  }
+</script>
 <body>
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-  <form role="form" action="/login"  th:object="${loginForm}" method="post" >
+  <form role="form" action="/login"  th:object="${loginForm}" method="post">
     <div class="form-group">
       <label for="id">이름</label>
       <input type="text" th:field="*{name}" id="id" class="form-control" placeholder="아이디">

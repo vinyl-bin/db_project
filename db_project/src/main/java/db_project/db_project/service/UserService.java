@@ -3,6 +3,7 @@ package db_project.db_project.service;
 import db_project.db_project.domain.User;
 import db_project.db_project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import static java.util.function.Predicate.isEqual;
 public class UserService {
 
     private final UserRepository userRepository;
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     /**
      * user등록
@@ -63,7 +65,7 @@ public class UserService {
 
     public User login(String userName, String password) {
         User user = userRepository.findOneByUserName(userName);
-        if(!user.getPassword().equals(password)){
+        if(!passwordEncoder.matches(password, user.getPassword())){
             System.out.println("Wrong password");
             user = null;
         }
