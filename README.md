@@ -19,3 +19,4 @@
 ![Screenshot from 2023-12-02 22-39-41](https://github.com/vinyl-bin/db_project/assets/85878793/025a6d36-fca2-4afc-b731-495da0115160)
 5. 실행을 중지한 뒤 application.yml의 ddl-auto를 update로 수정한다.
 6. 다시 DbProjectApplication에서 실행한 뒤 웹브라우저를 통해 localhost:8080에 접속한다.
+(자바 11버전으로 해야한다.)
