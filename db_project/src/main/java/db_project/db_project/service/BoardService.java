@@ -54,13 +54,14 @@ public class BoardService {
             byte[] fileBytes = file.getBytes();
 
             // 파일 저장 부분
-            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+//            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+            String projectPath = "./src/main/resources/static/files/";
             UUID uuid = UUID.randomUUID();
             String fileName = uuid + "_" + file.getOriginalFilename();
 
 //            File saveFile = new File(projectPath, fileName);
             String saveFilePath = projectPath + fileName;
-            String filePath = "/files/" + fileName;
+            String filePath = "./src/main/resources/static/files/" + fileName;
 
             // Files.write() 메서드를 사용하여 파일을 즉시 저장합니다.
             try {

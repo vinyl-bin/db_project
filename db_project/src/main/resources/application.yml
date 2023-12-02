@@ -13,8 +13,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-#      ddl-auto: update
-      ddl-auto: create
+      ddl-auto: update
+#      ddl-auto: create
       naming:
 #        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -35,3 +35,12 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 
+cloud:
+  aws:
+    s3:
+      bucket: vinyl-bin-dbproject
+      stack.auto: false
+      region.static: ap-northeast-2    #버킷 리전
+      credentials:
+      accessKey: ${ACCESS_KEY}
+      secretKey: ${SECRET_KEY}
