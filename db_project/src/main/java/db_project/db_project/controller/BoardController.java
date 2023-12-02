@@ -68,7 +68,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String board(@RequestParam BoardForm form,
+    public String board(@Valid BoardForm form,
                         @RequestParam("feeds") long feed_id, HttpSession session) throws Exception {    //꼭 예외처리 해야 함. writeBoard가 예외처리를 꼭 해야하기 때문.
 
         if(session.getAttribute("userId") == null) {
