@@ -1,5 +1,7 @@
 package db_project.db_project.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import db_project.db_project.controller.BoardController;
 import db_project.db_project.domain.*;
 import db_project.db_project.repository.BoardFeedRepositoryImpl;
@@ -8,6 +10,7 @@ import db_project.db_project.repository.FeedRepository;
 import db_project.db_project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +36,11 @@ public class BoardService {
     private final BoardFeedRepositoryImpl boardFeedRepository;
     private final BoardFeedService boardFeedService;
 
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
 
     /**
      * 게시판 작성
@@ -50,44 +58,21 @@ public class BoardService {
 
         if (!file.isEmpty()) {
 
-            // MultipartFile 객체에서 파일 데이터를 byte[] 형태로 추출합니다.
-            byte[] fileBytes = file.getBytes();
-
-            // 파일 저장 부분
-//            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
-            String projectPath = "./src/main/resources/static/files/";
             UUID uuid = UUID.randomUUID();
             String fileName = uuid + "_" + file.getOriginalFilename();
 
-//            File saveFile = new File(projectPath, fileName);
-            String saveFilePath = projectPath + fileName;
-            String filePath = "./src/main/resources/static/files/" + fileName;
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(file.getSize());
+            metadata.setContentType(file.getContentType());
 
-            // Files.write() 메서드를 사용하여 파일을 즉시 저장합니다.
-            try {
-                Files.write(Paths.get(saveFilePath), fileBytes);
-            } catch (Exception e) {
-                throw e;
-            }
+            //putObject() 메소드가 파일을 저장해주는 메소드
+            amazonS3Client.putObject(bucket,fileName,file.getInputStream(),metadata);
 
-            // files 폴더 경로
-            String folderPath = "/home/dabin/Desktop/SpringBoot/db_project/db_project/src/main/resources/static/files";
+            String fileUrl = amazonS3Client.getUrl(bucket, fileName).toString();
 
-            // 변경된 파일 목록 업데이트
-            List<String> updatedFileList = Files.list(Paths.get(folderPath))
-                    .map(Path::getFileName)
-                    .map(Path::toString)
-                    .collect(Collectors.toList());
-
-            System.out.println("***************************************************************************************************************************************************************************");
-            for(String a : updatedFileList) {
-                System.out.println(a);
-            }
-
-//            file.transferTo(saveFile);  //예외처리 꼭 필요해서 throws 추가함.
 
             //board 생성
-            Board board = Board.createBoardWithFile(user, boardFeed, title, text, fileName, filePath);
+            Board board = Board.createBoardWithFile(user, boardFeed, title, text, fileName, fileUrl);
 
             //board 저장
             boardFeedRepository.save(boardFeed);
@@ -135,21 +120,17 @@ public class BoardService {
         }
         else {
 
-            byte[] fileBytes = fileSave.getBytes();
-
-            // 파일 저장 부분
-            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
             UUID uuid = UUID.randomUUID();
             String newFileName = uuid + "_" + fileSave.getOriginalFilename();
 
-            String saveFilePath = projectPath + newFileName;
-            String newFilePath = "/files/" + newFileName;
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(fileSave.getSize());
+            metadata.setContentType(fileSave.getContentType());
 
-            try {
-                Files.write(Paths.get(saveFilePath), fileBytes);
-            } catch (Exception e) {
-                throw e;
-            }
+            //putObject() 메소드가 파일을 저장해주는 메소드
+            amazonS3Client.putObject(bucket,fileName,fileSave.getInputStream(),metadata);
+
+            String newFilePath = amazonS3Client.getUrl(bucket, fileName).toString();
 
             board = Board.createBoardWithFile(user, boardFeed, title, text, newFileName, newFilePath);
         }

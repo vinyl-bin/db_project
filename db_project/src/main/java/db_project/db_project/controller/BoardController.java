@@ -1,5 +1,6 @@
 package db_project.db_project.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
 import db_project.db_project.domain.*;
 import db_project.db_project.repository.BoardFeedRepositoryImpl;
 import db_project.db_project.repository.BoardRepository;
@@ -10,6 +11,7 @@ import db_project.db_project.service.FeedService;
 import db_project.db_project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +48,7 @@ public class BoardController {
     @Autowired
     UserRepository userRepository;
 
+
     @GetMapping("/board/write")
     public String createForm(Model model, HttpSession session) {
         List<Feed> feeds = feedService.findFeeds();
@@ -65,7 +68,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String board(@Valid BoardForm form,
+    public String board(@RequestParam BoardForm form,
                         @RequestParam("feeds") long feed_id, HttpSession session) throws Exception {    //꼭 예외처리 해야 함. writeBoard가 예외처리를 꼭 해야하기 때문.
 
         if(session.getAttribute("userId") == null) {
