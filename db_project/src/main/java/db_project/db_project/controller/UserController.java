@@ -67,8 +67,11 @@ public class UserController {
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpSession session) {
         try{
-            if (bindingResult.hasErrors()) {
-                return "user/login";
+            if (bindingResult.hasErrors()) {     //아이디나 비밀번호를 입력하지 않았을 때 발생
+                String warningMessage = "아이디 또는 비밀번호가 맞지 않습니다.";
+
+                String encodedMessage = URLEncoder.encode(warningMessage, StandardCharsets.UTF_8);
+                return "redirect:/login?loginFailMessage=" + encodedMessage;
             }
 
             User loginUser = userService.login((String) form.getName(), form.getPassword());
@@ -86,7 +89,11 @@ public class UserController {
             return "redirect:/";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/login";
+
+            String warningMessage = "아이디 또는 비밀번호가 맞지 않습니다.";
+
+            String encodedMessage = URLEncoder.encode(warningMessage, StandardCharsets.UTF_8);
+            return "redirect:/login?loginFailMessage=" + encodedMessage;
         }
     }
 
