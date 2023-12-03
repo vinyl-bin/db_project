@@ -13,8 +13,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: update
-#      ddl-auto: create
+#      ddl-auto: update
+      ddl-auto: create
       naming:
 #        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -29,7 +29,11 @@ spring:
           enabled: true
           algorithm: sha-256
   config:
-    import: file:/home/dabin/Desktop/SpringBoot/db_project/db_project/src/main/resources/applicationValue.properties    # 변수 값 지정한 파일 위치
+    import: file:/app/src/main/resources/applicationValue.properties    # 변수 값 지정한 파일 위치
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 
 logging:
@@ -43,7 +47,7 @@ cloud:
       accessKey: ${ACCESS_KEY} # IAM 사용자 엑세스 키
       secretKey: ${SECRET_KEY} # IAM 사용자 비밀 엑세스 키
     s3:
-      bucket: vinyl-bin-dbproject # 버킷명
+      bucket: ${S3_BUCKET} # 버킷명
     region:
       static: ap-northeast-2 # 리전
     stack:

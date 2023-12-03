@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim as Build
+FROM openjdk:11-jdk
 
 COPY . /app
 
@@ -7,13 +7,12 @@ WORKDIR /app
 RUN chmod +x gradlew
 RUN ./gradlew build -x test
 
-FROM openjdk:11-jdk-slim
-
+RUN mkdir -p /app/backend
 ARG JAR_FILE=build/libs/db_project-0.0.1-SNAPSHOT.jar
-COPY --from=Build /app/${JAR_FILE} app.jar
+RUN cp /app/${JAR_FILE} /app/backend/app.jar
 
 EXPOSE 8080
 
 COPY wait-for-it.sh wait-for-it.sh
 RUN chmod +x wait-for-it.sh
-ENTRYPOINT ["./wait-for-it.sh", "mysql:3306", "-s", "-t", "100", "—"]
+ENTRYPOINT ["./wait-for-it.sh", "mysql:3306", "-s", "-t", "100", "--"]
